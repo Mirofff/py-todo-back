@@ -8,3 +8,4 @@ types-aiobotocore-dynamodb
 asgi-lifespan
 pyjwt
 argon2-cffi
+semver

@@ -13,7 +13,7 @@ from src.models import user as user_models
 router = fastapi.APIRouter(prefix="/auth", tags=["Auth"])
 
 
-@router.post("/register")
+@router.post("/register", status_code=fastapi.status.HTTP_201_CREATED)
 async def register_user(dyno: repositories_depends.DynoDepends, user_register_dto: user_dtos.UserRegister):
     """
     Register new user endpoint.
@@ -25,7 +25,6 @@ async def register_user(dyno: repositories_depends.DynoDepends, user_register_dt
     if public_user is not None:
         try:
             await user_handlers.register_new_user(dyno, public_user, user_register_dto.password)
-            return fastapi.Response(status_code=fastapi.status.HTTP_201_CREATED)
         except user_exception.UserCreationException:
             raise fastapi.HTTPException(
                 fastapi.status.HTTP_500_INTERNAL_SERVER_ERROR, "Unknown error in user creation..."
@@ -41,8 +40,8 @@ async def login_user(dyno: repositories_depends.DynoDepends, credentials: auth_d
     user = await user_handlers.login_user(dyno, credentials.username, credentials.password)
     if user:
         access, refresh = auth_handlers.generate_access_refresh(user)
-
         return auth_dtos.AuthSuccess(access_token=access.jwt, refresh_token=refresh.jwt, expires_in=access.exp)
+
     raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED, "Email or password is incorrect")
 
 

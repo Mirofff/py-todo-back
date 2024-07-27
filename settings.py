@@ -19,7 +19,7 @@ class Settings(pydantic_settings.BaseSettings):
     ACCESS_TOKEN_EXPIRATION: int = pydantic.Field(60)  # * minutes
     REFRESH_TOKEN_EXPIRATION: int = pydantic.Field(168)  # * hours
 
-    VERSION: float = pydantic.Field()
+    VERSION: str = pydantic.Field()
 
     LOG_LEVEL: str = pydantic.Field(str)
     LOG_FORMATTER: str = pydantic.Field("{asctime} {levelname:10s} {message:50s} ({funcName} - {pathname}:{lineno})")

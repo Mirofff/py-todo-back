@@ -4,6 +4,5 @@ black
 isort
 
 mypy
-pydantic-mypy
 
 -r requirements.txt
