@@ -1,0 +1,41 @@
+name: Deploy Yandex Function
+run-name: ${{ github.actor }} function deploy
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Deploy Function
+        id: sls-func
+        uses: yc-actions/yc-sls-function@v2
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+          folder-id: ${{ secrets.YC_FOLDER_ID }}
+          function-name: ${{ vars.FUNCTION_NAME }}
+          runtime: 'python312'
+          memory: '128Mb'
+          execution-timeout: 10
+          entrypoint: 'function_app.handle'
+          environment: |
+            SIGNING_KEY=${{ secrets.SIGNING_KEY }}
+            DB_ENDPOINT=${{ secrets.DB_ENDPOINT }}
+            DB_ACCESS_KEY=${{ secrets.DB_ACCESS_KEY }}
+            DB_SECRET_KEY=${{ secrets.DB_SECRET_KEY }}
+            DB_TABLE=${{vars.VERSION}}
+            VERSION=${{vars.VERSION}}
+          include: |
+            ./src
+            ./packages
+            function_app.py
+            requirements.txt
+          exclude: |
+            **/.pytest_cache
+            **/__pycache__
+            **/.git

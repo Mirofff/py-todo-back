@@ -15,7 +15,7 @@ async def _lifespan(_: fastapi.FastAPI):
     _logger.info("REST APPLICATION STARTUP...")
     _logger.info("DYNAMODB CONNECTING...")
     async with dyno_connection.DynoConnection(
-        settings.config.DB_URL, settings.config.DB_ACCESS_KEY, settings.config.DB_SECRET_KEY
+        settings.config.DB_ENDPOINT, settings.config.DB_ACCESS_KEY, settings.config.DB_SECRET_KEY
     ) as dyno:
         await dyno.register_main_table(settings.config.DB_TABLE)
         await dyno.register_tokens_table(settings.config.DB_TOKENS_TABLE)

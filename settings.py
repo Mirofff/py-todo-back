@@ -9,7 +9,7 @@ def _get_log_level(str_log_level: str) -> int:
 
 
 class Settings(pydantic_settings.BaseSettings):
-    DB_URL: pydantic.HttpUrl = pydantic.Field()
+    DB_ENDPOINT: pydantic.HttpUrl = pydantic.Field()
     DB_ACCESS_KEY: str = pydantic.Field()
     DB_SECRET_KEY: str = pydantic.Field()
     DB_TABLE: str = pydantic.Field()
