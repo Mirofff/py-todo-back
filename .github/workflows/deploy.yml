@@ -6,7 +6,7 @@ on:
     branches: [ dev ]
 
 jobs:
-  Deploy:
+  function-deploy:
     runs-on: ubuntu-latest
     environment: dev
     steps:
@@ -31,8 +31,9 @@ jobs:
             DB_TABLE=${{vars.VERSION}}
             VERSION=${{vars.VERSION}}
           include: |
-            ./src
-            ./packages
+            src/
+            packages/
+            settings.py
             function_app.py
             requirements.txt
           exclude: |

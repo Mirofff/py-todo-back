@@ -31,8 +31,8 @@ async def _lifespan(_: fastapi.FastAPI):
     _logger.info("REST APPLICATION SHUTDOWN - SUCCESS")
 
 
-def new_fastapi_app(version: str) -> fastapi.FastAPI:
-    app = fastapi.FastAPI(lifespan=_lifespan, version=version, root_path=f"/{version}")
+def new_fastapi_app(version: float) -> fastapi.FastAPI:
+    app = fastapi.FastAPI(lifespan=_lifespan, version=str(version), root_path=f"/api/v{int(version)}")
 
     app.include_router(tasks_router.router)
     app.include_router(auth_router.router)
