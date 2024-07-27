@@ -28,7 +28,7 @@ jobs:
             DB_ENDPOINT=${{ secrets.DB_ENDPOINT }}
             DB_ACCESS_KEY=${{ secrets.DB_ACCESS_KEY }}
             DB_SECRET_KEY=${{ secrets.DB_SECRET_KEY }}
-            DB_TABLE=${{vars.VERSION}}
+            DB_TABLE=dev
             VERSION=${{vars.VERSION}}
           include: |
             src/
