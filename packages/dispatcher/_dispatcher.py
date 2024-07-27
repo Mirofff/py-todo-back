@@ -80,7 +80,7 @@ class Dispatcher:
                 logger.debug(f"Output response: {asgi_app_response}")
                 return asgi_app_response
 
-    async def __call__(self, event: dict):
+    async def __call__(self, event: dict, context: dict):
         logger.info("DISPATCHER STARTUP")
 
         if not event:
