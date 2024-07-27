@@ -1,0 +1,10 @@
+fastapi
+pydantic[email]
+pydantic-settings
+aioboto3
+boto3-stubs
+types-aioboto3
+types-aiobotocore-dynamodb
+asgi-lifespan
+pyjwt
+argon2-cffi

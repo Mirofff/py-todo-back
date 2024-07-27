@@ -1,0 +1,13 @@
+services:
+  local-dynamodb:
+    image: amazon/dynamodb-local
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    user: root
+    ports:
+      - "9000:8000"
+    volumes:
+      - "dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+
+volumes:
+  dynamodb:
