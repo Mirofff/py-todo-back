@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} function deploy
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ dev, "cicd/**" ]
 
 jobs:
   function-deploy:
