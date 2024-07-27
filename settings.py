@@ -21,7 +21,7 @@ class Settings(pydantic_settings.BaseSettings):
 
     VERSION: str = pydantic.Field()
 
-    LOG_LEVEL: str = pydantic.Field(str)
+    LOG_LEVEL: str = pydantic.Field("DEBUG")
     LOG_FORMATTER: str = pydantic.Field("{asctime} {levelname:10s} {message:50s} ({funcName} - {pathname}:{lineno})")
 
     model_config = pydantic_settings.SettingsConfigDict(case_sensitive=True)

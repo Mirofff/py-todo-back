@@ -2,10 +2,11 @@ import contextlib
 import logging
 
 import fastapi
+import semver
 
 import settings
-from src.entrypoints.rest.routers import tasks as tasks_router, auth as auth_router
 from src.database.dynamo import connection as dyno_connection
+from src.entrypoints.rest.routers import auth as auth_router, tasks as tasks_router
 
 _logger = logging.getLogger(__name__)
 
@@ -31,8 +32,14 @@ async def _lifespan(_: fastapi.FastAPI):
     _logger.info("REST APPLICATION SHUTDOWN - SUCCESS")
 
 
-def new_fastapi_app(version: str) -> fastapi.FastAPI:
-    app = fastapi.FastAPI(lifespan=_lifespan, version=version, root_path=f"/{version}")
+def new_fastapi_app(version: semver.Version) -> fastapi.FastAPI:
+    app = fastapi.FastAPI(
+        title="TODO Tasks Service",
+        description="Simple todos tasks service built with FastAPI and DynamoDB (provide by aioboto3 lib)",
+        lifespan=_lifespan,
+        version=str(version.finalize_version()),
+        root_path=f"/api/v{version.major}",
+    )
 
     app.include_router(tasks_router.router)
     app.include_router(auth_router.router)
