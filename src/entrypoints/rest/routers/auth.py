@@ -2,6 +2,8 @@
 ! TODO: Logging
 """
 
+import logging
+
 import fastapi
 
 from src.entrypoints.rest.depends import repositories as repositories_depends
@@ -11,6 +13,8 @@ from src.handlers import auth as auth_handlers, user as user_handlers
 from src.models import user as user_models
 
 router = fastapi.APIRouter(prefix="/auth", tags=["Auth"])
+
+_logger = logging.getLogger(__name__)
 
 
 @router.post("/register", status_code=fastapi.status.HTTP_201_CREATED)
@@ -25,15 +29,23 @@ async def register_user(dyno: repositories_depends.DynoDepends, user_register_dt
     if public_user is not None:
         try:
             await user_handlers.register_new_user(dyno, public_user, user_register_dto.password)
-        except user_exception.UserCreationException:
+        except user_exception.UserAlreadyExistException as e:
+            _logger.error(e)
+            raise fastapi.HTTPException(
+                fastapi.status.HTTP_500_INTERNAL_SERVER_ERROR,
+                f"User with email: {user_register_dto.email}, already exist.",
+            )
+        except user_exception.UserException as e:
+            _logger.error(e)
             raise fastapi.HTTPException(
                 fastapi.status.HTTP_500_INTERNAL_SERVER_ERROR, "Unknown error in user creation..."
             )
-    raise fastapi.HTTPException(fastapi.status.HTTP_500_INTERNAL_SERVER_ERROR, "Unknown error in user creation...")
 
 
 @router.post("/token", response_model=auth_dtos.AuthSuccess)
-async def login_user(dyno: repositories_depends.DynoDepends, credentials: auth_dtos.AuthCredentialsFormDepends):
+async def login_user(
+    dyno: repositories_depends.DynoDepends, credentials: auth_dtos.AuthCredentialsFormDepends, req: fastapi.Request
+):
     """
     Login user endpoint. Return access and refresh token on success.
     """
@@ -42,6 +54,7 @@ async def login_user(dyno: repositories_depends.DynoDepends, credentials: auth_d
         access, refresh = auth_handlers.generate_access_refresh(user)
         return auth_dtos.AuthSuccess(access_token=access.jwt, refresh_token=refresh.jwt, expires_in=access.exp)
 
+    _logger.warn(f"Wrong authenticate try: {req.client=}, username: {credentials.username}")
     raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED, "Email or password is incorrect")
 
 
