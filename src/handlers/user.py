@@ -24,7 +24,7 @@ async def register_new_user(
             return user
 
         except Exception:
-            raise user_exceptions.UserCreationException()
+            raise user_exceptions.UserException()
 
     raise user_exceptions.UserAlreadyExistException()
 

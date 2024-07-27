@@ -9,3 +9,4 @@ asgi-lifespan
 pyjwt
 argon2-cffi
 semver
+coloredlogs

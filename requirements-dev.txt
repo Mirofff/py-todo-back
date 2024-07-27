@@ -4,5 +4,6 @@ black
 isort
 
 mypy
+pre-commit
 
 -r requirements.txt

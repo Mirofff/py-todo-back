@@ -1,5 +1,6 @@
 import logging
 
+import coloredlogs
 import pydantic
 import pydantic_settings
 
@@ -22,7 +23,7 @@ class Settings(pydantic_settings.BaseSettings):
     VERSION: str = pydantic.Field()
 
     LOG_LEVEL: str = pydantic.Field("DEBUG")
-    LOG_FORMATTER: str = pydantic.Field("{asctime} {levelname:10s} {message:50s} ({funcName} - {pathname}:{lineno})")
+    LOG_FORMATTER: str = pydantic.Field("{asctime} {levelname:8s} ({pathname}:{lineno}) {message:50s}")
 
     model_config = pydantic_settings.SettingsConfigDict(case_sensitive=True)
 
@@ -31,12 +32,14 @@ config = Settings()  # type: ignore
 
 
 def init_loggers(project_root: str, log_level=_get_log_level(config.LOG_LEVEL)) -> logging.Logger:
-    console_log_stream = logging.StreamHandler()
-    console_log_stream.setFormatter(logging.Formatter(config.LOG_FORMATTER, style="{"))
+    # console_log_stream = logging.StreamHandler()
+    # console_log_stream.setFormatter(coloredlogs.ColoredFormatter(config.LOG_FORMATTER, style="{"))
 
     logger = logging.getLogger(project_root)
     logger.setLevel(log_level)
-    logger.addHandler(console_log_stream)
+    # logger.addHandler(console_log_stream)
     logger.propagate = False
+
+    coloredlogs.install(logger=logger, style="{", fmt=config.LOG_FORMATTER)
 
     return logger
