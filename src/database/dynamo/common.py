@@ -94,7 +94,6 @@ async def update_item(
         ExpressionAttributeValues=expression_attribute_values,
         ReturnValues="ALL_NEW",
         ReturnConsumedCapacity="TOTAL",
-        ReturnItemCollectionMetrics="SIZE",
     )
 
     return model(**dyno_serializers.dynamo_item_to_python(resp["Attributes"]))
