@@ -2,15 +2,15 @@
 ! TODO: Logging
 """
 
-import uuid
 import typing as t
+import uuid
 
 from boto3.dynamodb import conditions as boto_conditions
 
 from src.database.dynamo import common as dynamo_common, connection as dynamo_connection
+from src.exceptions import common as common_exceptions
 from src.models import task as task_models, user as user_models
 from src.types import dynamo as dyno_types
-from src.exceptions import common as common_exceptions
 
 
 def _task_key(user: user_models.User, task_id: uuid.UUID = uuid.uuid4()) -> dyno_types.DynoItem:

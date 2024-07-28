@@ -2,9 +2,9 @@
 Theres no base64 to python function - it's unsafe
 """
 
-import typing as t
 import base64
 import json
+import typing as t
 
 
 def python_to_base64(obj: t.Any) -> str:

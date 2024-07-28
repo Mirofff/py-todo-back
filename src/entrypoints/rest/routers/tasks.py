@@ -2,17 +2,17 @@
 ! TODO: Logging
 """
 
-import uuid
 import typing as t
+import uuid
 
 import fastapi
 
+from packages import common as common_package
+from src.database.dynamo import common as dynamo_common
 from src.entrypoints.rest.depends import auth as auth_depends, repositories as repositories_depends
 from src.entrypoints.rest.dtos import common as common_dtos, tasks as tasks_dtos
-from src.database.dynamo import common as dynamo_common
 from src.handlers import task as task_handlers
 from src.models import task as task_models
-from packages import common as common_package
 
 router = fastapi.APIRouter(prefix="/tasks", tags=["Tasks"])
 

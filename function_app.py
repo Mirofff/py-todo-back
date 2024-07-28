@@ -10,12 +10,10 @@ init_loggers(__name__)
 
 logger = logging.getLogger()
 
-logger.info("FASTAPI APPLICATION CREATION...")
+app = app_rest.new_fastapi_app(semver.Version.parse(config.VERSION))
 
-fastapi_app = app_rest.new_fastapi_app(semver.Version.parse(config.VERSION))
+logger.info("FUNCTION INVOKE START")
 
-logger.info("PASS ASGI APP TO FUNCTION")
-
-handle = dispatcher.Dispatcher(fastapi_app)
+handle = dispatcher.Dispatcher(app)
 
 logger.info("FUNCTION INVOKE IS END!")
