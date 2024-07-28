@@ -1,7 +1,8 @@
-import typing as t
 import datetime
-import fastapi
 import enum
+import typing as t
+
+import fastapi
 
 from ._base import FromAttributesBaseModel
 

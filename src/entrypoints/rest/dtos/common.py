@@ -1,6 +1,7 @@
 import typing as t
 
 import pydantic
+
 from packages import common as common_packages
 from src.types import dynamo as dynamo_types
 

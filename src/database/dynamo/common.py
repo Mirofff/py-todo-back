@@ -7,7 +7,7 @@ import typing as t
 from boto3.dynamodb import conditions as boto_conditions
 from types_aiobotocore_dynamodb import service_resource as aiodyno_service_types, type_defs as aiodyno_defs
 
-from src.database.dynamo import connection as dyno_connection, serializers as dyno_serializers, common as dynamo_common
+from src.database.dynamo import common as dynamo_common, connection as dyno_connection, serializers as dyno_serializers
 from src.types import abstract as abstract_types, dynamo as dynamo_types
 
 _T = t.TypeVar("_T", bound=abstract_types.AbstractDomainModel)

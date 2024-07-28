@@ -1,7 +1,8 @@
 import uuid
 
-from src.types import abstract as abstract_types
 import argon2
+
+from src.types import abstract as abstract_types
 
 
 class User(abstract_types.AbstractDomainModel):

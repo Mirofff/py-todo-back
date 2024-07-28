@@ -2,9 +2,9 @@
 ! TODO: Logging
 """
 
-from src.models import auth as auth_models, user as user_models
-from src.database.dynamo import user as user_dynamo, connection as dynamo_connection
+from src.database.dynamo import connection as dynamo_connection, user as user_dynamo
 from src.exceptions import auth as auth_exceptions
+from src.models import auth as auth_models, user as user_models
 
 
 def generate_access_refresh(user: user_models.User) -> tuple[auth_models.AccessToken, auth_models.RefreshToken]:

@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "uvicorn",
             "args": [
-                "function_app:fastapi_app",
+                "function_app:app",
                 "--reload"
             ],
             "justMyCode": false,

@@ -1,5 +1,6 @@
-import pydantic
 import abc
+
+import pydantic
 
 
 class FromAttributesBaseModel(abc.ABC, pydantic.BaseModel):

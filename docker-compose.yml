@@ -9,5 +9,28 @@ services:
       - "dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
 
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin
+    ports:
+      - "8001:8001"
+    environment:
+      - DYNAMO_ENDPOINT=http://local-dynamodb:8000
+    depends_on:
+      - local-dynamodb
+
+  app:
+    build:
+      context: .
+      dockerfile: .docker/app.dockerfile
+    ports:
+      - "8000:80"
+    environment:
+      - DB_ENDPOINT=http://local-dynamodb:8000
+      - DB_ACCESS_KEY=testing
+      - DB_SECRET_KEY=testing
+      - DB_TABLE=testing
+      - SIGNING_KEY=testing
+      - VERSION=0.1.1
+
 volumes:
   dynamodb:

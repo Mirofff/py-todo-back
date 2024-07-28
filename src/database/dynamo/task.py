@@ -1,12 +1,10 @@
 import typing as t
 import uuid
 
-from types_aiobotocore_dynamodb import service_resource as aiodyno_types
-from types_aiobotocore_dynamodb import type_defs as aiodyno_defs
+from types_aiobotocore_dynamodb import service_resource as aiodyno_types, type_defs as aiodyno_defs
 
 from src.database.dynamo import common as dynamo_common
-from src.models import task as task_models
-from src.models import user as user_models
+from src.models import task as task_models, user as user_models
 
 
 def _key(task_id: uuid.UUID, user_id: uuid.UUID) -> t.Mapping[str, aiodyno_defs.TableAttributeValueTypeDef]:

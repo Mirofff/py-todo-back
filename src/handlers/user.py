@@ -2,8 +2,7 @@
 ! TODO: Logging
 """
 
-from src.database.dynamo import connection as dynamo_connection
-from src.database.dynamo import user as user_dynamo
+from src.database.dynamo import connection as dynamo_connection, user as user_dynamo
 from src.exceptions import user as user_exceptions
 from src.models import user as user_models
 
